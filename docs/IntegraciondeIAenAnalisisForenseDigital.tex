@@ -2,6 +2,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[spanish]{babel}
+\usepackage{csquotes}
 
 % *** CITATION PACKAGES ***
 \usepackage[style=ieee,backend=biber]{biblatex}
@@ -258,17 +259,35 @@ Al evaluar el panorama global con rigor metodológico, se concluye contundenteme
 % SECCIÓN 14: IMPLICACIONES LEGALES Y ÉTICAS
 %===========================================================
 \section{Implicaciones legales, éticas y probatorias}
-La automatización pericial introduce un cambio de paradigma en el derecho probatorio. Éticamente, el uso de sistemas opacos traslada la carga de la toma de decisiones algorítmicas a un terreno sin auditoría, lo que puede resultar en la incriminación injusta por falsos positivos (sesgo sistémico). Probatoriamente, un dictamen forense basado en un LLM o una red profunda que no pueda explicar el origen de su deducción violaría el principio de contradicción de la prueba. El perito asume responsabilidad civil y penal; por lo tanto, no puede delegar la autoría intelectual del hallazgo a una máquina. Como argumenta Sharma et al. \cite{SharmaDevanshu2026LaEI}, el uso de la IA es lícito \textit{únicamente} cuando actúa como herramienta de perfilación (triaje) o cuando sus resultados estadísticos son verificables empíricamente por un humano independiente.
+La automatización pericial mediante inteligencia artificial introduce un cambio de paradigma insoslayable en el derecho probatorio y la epistemología judicial. Como se ilustra en la Figura \ref{fig:pipeline_ia}, el flujo de trabajo forense debe incorporar capas de validación humana y explicabilidad algorítmica para evitar que la tecnología socave los pilares constitucionales del debido proceso.
+
+\subsection{El Principio de Contradicción y el Derecho a la Defensa}
+Éticamente, el uso de sistemas computacionales opacos traslada la carga de la toma de decisiones críticas a un terreno desprovisto de auditoría independiente. Desde el punto de vista jurídico, fundamentar un dictamen forense en las inferencias de un Gran Modelo de Lenguaje (LLM) o una red neuronal profunda que no pueda explicar causalmente el origen de su deducción vulnera flagrantemente el principio de contradicción de la prueba.
+
+La defensa tiene el derecho inalienable de interrogar la fiabilidad de los métodos empleados para incriminar a un procesado. Si el perito informático desconoce los umbrales de activación neuronal, los pesos específicos de las características evaluadas (\textit{feature importance}) o los sesgos inherentes a la data de entrenamiento, el testimonio experto se desvirtúa \cite{HermosillaPamela2025EAfF}. El analista asume plena responsabilidad civil, penal y disciplinaria sobre su dictamen; por ende, no puede delegar la autoría intelectual del hallazgo a la falibilidad de una máquina \cite{SharmaDevanshu2026LaEI}.
+
+\subsection{Reglamentaciones Nacionales e Internacionales}
+La admisibilidad de la evidencia procesada mediante inteligencia artificial debe evaluarse a la luz de los marcos procedimentales locales. En el contexto de Colombia, la Ley 906 de 2004 (Código de Procedimiento Penal) establece en su Artículo 275 los elementos materiales probatorios y la evidencia física, exigiendo en sus artículos subsiguientes la estricta demostración de autenticidad, mismidad e inalterabilidad de la prueba digital. La aplicación de un algoritmo de IA directamente sobre la evidencia física original violaría la cadena de custodia dispuesta en el manual de policía judicial.
+
+En la esfera internacional, normativas emergentes como la Ley de Inteligencia Artificial de la Unión Europea (\textit{EU AI Act}) catalogan a los sistemas algorítmicos empleados en la administración de justicia y en la aplicación de la ley (\textit{law enforcement}) como sistemas de ``Alto Riesgo''. Esta clasificación impone obligaciones perentorias de trazabilidad, robustez cibernética, supervisión humana ininterrumpida y transparencia, alineándose con las directrices del NIST AI RMF \cite{NIST_AI_RMF_2023}. En este sentido, la IA pericial es lícita únicamente cuando sus resultados estadísticos son empíricamente verificables e interpretables por un operador humano competente e independiente.
 
 %===========================================================
 % SECCIÓN 15: LIMITACIONES Y LÍNEAS FUTURAS
 %===========================================================
 \section{Limitaciones y líneas futuras de investigación}
-\subsection{Limitaciones}
-Las principales limitaciones identificadas radican en: 1) la escasez de \textit{datasets} forenses etiquetados de acceso público debido a leyes de privacidad, lo que dificulta el entrenamiento de modelos imparciales; 2) la obsolescencia algorítmica, donde generadores de \textit{deepfakes} de nueva generación eluden fácilmente los clasificadores entrenados en versiones previas; y 3) la ausencia de estandarización en la cuantificación de la incertidumbre, donde las métricas tradicionales ($F_1$-Score) no logran capturar el nivel de confianza necesario para superar un contrainterrogatorio judicial severo.
+A pesar de los notables avances documentados en el estado del arte, la integración de la IA en los laboratorios forenses enfrenta barreras estructurales que limitan su adopción masiva.
+
+\subsection{Limitaciones Documentadas}
+\textbf{1. Disponibilidad de Datasets y Privacidad:} La escasez de conjuntos de datos forenses etiquetados de acceso público representa el obstáculo metodológico más agudo de la disciplina. A diferencia de dominios como la medicina o el procesamiento de imágenes genéricas, la evidencia digital pericial (imágenes de discos, volcados de memoria RAM, capturas de tráfico) está protegida por severas leyes de privacidad, regulaciones de retención de datos (como el GDPR europeo o la Ley 1581 en Colombia) y el secreto sumarial de investigaciones en curso. Esta limitación obliga a los investigadores académicos a entrenar sus modelos en \textit{datasets} sintéticos, simulados o desactualizados (ej. \textit{Enron Email Corpus}), lo que disminuye drásticamente la precisión del algoritmo al enfrentarse a la entropía y el ruido impredecible de una escena del crimen digital real \cite{QuickDarren2014Ioiv}.
+
+\textbf{2. Obsolescencia Algorítmica y Ataques Adversarios:} La carrera armamentística entre los mecanismos de detección y las técnicas de evasión genera una rápida obsolescencia algorítmica. Por ejemplo, en el dominio del análisis multimedia, los generadores de \textit{deepfakes} impulsados por modelos de difusión (\textit{Diffusion Models}) evolucionan a un ritmo que elude rápidamente los clasificadores forenses entrenados en versiones previas (como las redes GAN tradicionales) \cite{BharatiNitu2026EddA}. Asimismo, los sistemas de IA son vulnerables a ataques adversarios específicos, donde un cibercriminal puede introducir perturbaciones mínimas en el código de un \textit{malware} o en los píxeles de una imagen para forzar deliberadamente un falso negativo en la herramienta de triaje pericial, evadiendo la justicia \cite{MaccaroneLeeT.2025IACi}.
+
+\textbf{3. Cuantificación y Estandarización de la Incertidumbre:} Actualmente, la gran mayoría de las arquitecturas propuestas en la literatura académica reportan su eficacia utilizando métricas de la ciencia de datos computacional pura, tales como la Exactitud (\textit{Accuracy}), el F1-Score, o el Área Bajo la Curva (AUC). Sin embargo, estas métricas son estadísticamente insuficientes para el derecho penal. No logran capturar el nivel de confianza, el margen de error probabilístico ni la incertidumbre epistémica necesarios para superar un escrutinio judicial severo. Un juez no evalúa si un algoritmo tiene un 95\% de \textit{recall}, sino cuál es la probabilidad real de que el hallazgo coincida con la hipótesis acusatoria frente a la hipótesis de la defensa.
 
 \subsection{Propuesta de Mejora y Trabajo Futuro}
-Se propone el desarrollo de un marco unificado de gobernanza forense (auditoría de \textit{logs} y \textit{prompts}) diseñado específicamente para grandes modelos de lenguaje ejecutados en entornos locales (Local LLMs). El trabajo futuro debe centrarse en adaptar la métrica de costo de razón de verosimilitud ($C_{llr}$) \cite{WarrenEricM.2025Ceal} como el estándar de oro para reportar la tasa de error de algoritmos de inteligencia artificial en las cortes internacionales.
+Ante el auge de modelos como ChatGPT y Llama, se propone el desarrollo urgente de un marco unificado de gobernanza forense diseñado específicamente para Grandes Modelos de Lenguaje Locales (\textit{Local LLMs}). Este marco debe incorporar por diseño la auditoría forense de interacciones (almacenamiento inmutable de \textit{logs} y \textit{prompts}), garantizando que ninguna evidencia sensible se exfiltre hacia la nube.
+
+Adicionalmente, el trabajo futuro de las ciencias computacionales debe distanciarse de la maximización de la precisión binaria (verdadero/falso) y centrarse en la adopción pericial del Teorema de Bayes. Específicamente, se sugiere estandarizar la métrica de costo de razón de verosimilitud ($C_{llr}$) propuesta por Warren et al. \cite{WarrenEricM.2025Ceal}, estableciéndola como el estándar de oro irrefutable para reportar la tasa de error y la fuerza probatoria de los algoritmos de IA en los tribunales internacionales.
 
 %===========================================================
 % SECCIÓN 16: CONCLUSIONES
