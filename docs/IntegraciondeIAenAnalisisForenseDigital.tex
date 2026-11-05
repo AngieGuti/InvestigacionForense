@@ -142,6 +142,38 @@ La ejecución de una adquisición física requiere el uso de bloqueadores de esc
 
 Cuando la IA se emplea para el procesamiento, el Marco de Gestión de Riesgos (NIST AI RMF) exige que estos sistemas sean seguros, transparentes y justos \cite{NIST_AI_RMF_2023}. Los resultados analíticos deben conservar un hilo conductor auditable que traduzca la clasificación del modelo (apoyada en métricas como \textit{precision, recall, F1-score}) en razones de verosimilitud estructuradas \cite{WarrenEricM.2025Ceal}. Este estricto apego a los fundamentos permite a los peritos defender la repetibilidad de los hallazgos y rechazar herramientas de ``caja negra'' que no ofrezcan explicabilidad técnica frente a un juez.
 
+%===========================================================
+% SECCIÓN 12: TÉCNICAS DE IA APLICABLES
+%===========================================================
+\section{Técnicas de inteligencia artificial aplicables}
+La implementación de la Inteligencia Artificial en la informática forense exige una categorización taxonómica estricta, diferenciando las capacidades y los riesgos probatorios inherentes a cada paradigma computacional. A continuación, se analizan críticamente las técnicas aplicables frente a los estándares de admisibilidad pericial.
+
+\subsection{Aprendizaje Automático Clásico (Machine Learning)}
+El aprendizaje automático (ML) tradicional ha demostrado una alta eficacia en el triaje inicial de evidencia y la reducción de dimensionalidad frente al problema del \textit{Big Data} forense. Los algoritmos supervisados basados en ensambles de árboles de decisión (como \textit{Random Forest} y \textit{XGBoost}) se emplean extensivamente en la perfilación de metadatos para dispositivos móviles y sistemas de archivos \cite{SerhalCezar2021Mlba}.
+
+Sin embargo, desde una perspectiva pericial, estos modelos enfrentan desafíos críticos de generalización. Como evidencian Hermosilla et al., algoritmos como XGBoost son altamente susceptibles al sobreajuste (\textit{overfitting}) cuando se exponen a conjuntos de datos con desbalance de clases (común en la detección de intrusiones de red), lo que dispara las tasas de falsos positivos y compromete la confiabilidad técnica frente a una auditoría judicial \cite{HermosillaPamela2025UoEA}.
+
+\subsection{Aprendizaje Profundo (Deep Learning)}
+El Aprendizaje Profundo (DL) prescinde de la extracción manual de características, delegando esta tarea a redes neuronales multicapa.
+\begin{itemize}
+    \item \textbf{Visión Computacional:} Redes Neuronales Convolucionales (CNN) y \textit{Vision Transformers} se aplican para la detección de falsificaciones estructurales imperceptibles al ojo humano (ej. \textit{seam carving} y \textit{deepfakes}) \cite{BharatiNitu2026EddA, NevesMiguelJoseDas2025SCFD}. Arquitecturas híbridas como \textit{DeFaX} han reportado precisiones superiores al 99\% en la identificación de medios sintéticos generados por redes GAN \cite{Al-ImranMd2025DACF}.
+\end{itemize}
+
+El riesgo jurídico de estas técnicas radica en su naturaleza de ``caja negra''. La extrema complejidad de los pesos neuronales oculta la causalidad lógica de la decisión, impidiendo que el perito testifique con certeza sobre \textit{por qué} el algoritmo clasificó un artefacto como malicioso, invalidando su peso probatorio si no se acopla a técnicas de explicabilidad.
+
+\subsection{Inteligencia Artificial Generativa y LLMs}
+Los Grandes Modelos de Lenguaje (LLM) y Multimodales (MLLM) representan la frontera actual en la correlación de evidencia no estructurada. Se ha documentado su uso mediante técnicas de Generación Aumentada por Recuperación (RAG) para la reconstrucción de líneas de tiempo \cite{LoumachiFatmaYasmine2025ACIT}, así como para extraer explicaciones semánticas de imágenes sintetizadas \cite{10.1145/3733102.3733138}.
+
+No obstante, su aplicación forense enfrenta dos barreras severas: la no reproducibilidad estocástica y las ``alucinaciones'' (invención de datos). Si un modelo genera información ficticia sobre un registro de eventos, contamina irreversiblemente la investigación. Por ello, Dehing et al. enfatizan que su uso debe limitarse a implementaciones locales (\textit{offline}) para proteger la confidencialidad de la evidencia y evitar la exfiltración de datos a servidores de terceros \cite{DehingYing2026SRGu}.
+
+\subsection{Inteligencia Artificial Explicable (XAI) y Modelos Probabilísticos}
+Para superar la barrera de la admisibilidad legal, la predicción algorítmica debe traducirse a un lenguaje auditable. Esto se logra mediante dos vías:
+\begin{enumerate}
+    \item \textbf{Modelos Causales:} Uso de Redes Bayesianas y Programación Lógica (ASP) que modelan la incertidumbre matemática y permiten trazar el origen de un ataque de forma determinista \cite{MaccaroneLeeT.2025IACi, CostantiniStefania2015DFEA}.
+    \item \textbf{XAI Post-Hoc:} Métodos como SHAP (teoría de juegos cooperativos), LIME (perturbación local) y Grad-CAM (mapas de activación visual) \cite{HallStuartW.2022APoC, KhalidZainab2024TauX}. Hermosilla et al. demuestran que la validez de estas explicaciones en un tribunal debe medirse con métricas objetivas de estabilidad (\textit{Stability Score}) y fidelidad (\textit{Fidelity Score}) \cite{HermosillaPamela2025EAfF}.
+\end{enumerate}
+Finalmente, para cumplir con estándares jurídicos como Daubert (EE. UU.), Warren et al. sostienen que el desempeño de estos modelos debe presentarse bajo métricas de costo de Razón de Verosimilitud ($C_{llr}$), brindando al juez una medida estadística estandarizada del margen de error pericial \cite{WarrenEricM.2025Ceal}.
+
 \nocite{*}
 \printbibliography
 
