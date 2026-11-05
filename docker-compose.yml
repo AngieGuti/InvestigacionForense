@@ -1,0 +1,8 @@
+services:
+  latex_compiler:
+    image: texlive/texlive:latest
+    container_name: forense_latex_compiler
+    volumes:
+      - .:/workspace
+    working_dir: /workspace
+    command: sleep infinity
