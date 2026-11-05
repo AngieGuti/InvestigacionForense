@@ -174,6 +174,48 @@ Para superar la barrera de la admisibilidad legal, la predicción algorítmica d
 \end{enumerate}
 Finalmente, para cumplir con estándares jurídicos como Daubert (EE. UU.), Warren et al. sostienen que el desempeño de estos modelos debe presentarse bajo métricas de costo de Razón de Verosimilitud ($C_{llr}$), brindando al juez una medida estadística estandarizada del margen de error pericial \cite{WarrenEricM.2025Ceal}.
 
+%===========================================================
+% SECCIÓN 13: FRAMEWORKS Y MODELOS DE REFERENCIA
+%===========================================================
+\section{Frameworks y modelos de referencia identificados}
+La revisión sistemática de la literatura permitió consolidar un corpus de 10 arquitecturas y modelos de referencia orientados a la integración de la IA en la forensia digital. Al analizar su tipología, se evidencia que la inmensa mayoría constituyen \textbf{propuestas académicas y prototipos experimentales}, diseñados para resolver problemáticas de subdominios específicos (triaje, \textit{deepfakes}, redes), sin alcanzar aún el estatus de estándares internacionales transversales \cite{FAHNDRICH2023301617}.
+
+\subsection{Análisis Crítico y Nivel de Madurez}
+Si bien marcos como el NIST AI RMF \cite{NIST_AI_RMF_2023} establecen la gobernanza general del riesgo algorítmico, a nivel procedimental forense las propuestas son especializadas:
+\begin{itemize}
+    \item \textbf{XAI-DF (Khalid et al., 2024):} Arquitectura académica de referencia que estandariza la aplicación de SHAP y LIME sobre volcados de memoria y tráfico de red. Su principal aporte es la exigencia de un \textit{human-in-the-loop} para validar las explicaciones \cite{KhalidZainab2024TauX}.
+    \item \textbf{DeFaX (Al-Imran et al., 2025):} Prototipo experimental de fusión de atención cruzada (\textit{Swin Transformer} + \textit{EfficientNet}) para detección de medios sintéticos. Destaca por su alta precisión (99.8\%), pero su uso judicial está limitado por su naturaleza de ``caja negra'' mitigada solo parcialmente por Grad-CAM \cite{Al-ImranMd2025DACF}.
+    \item \textbf{GenDFIR (Loumachi et al., 2025):} Propuesta académica basada en Generación Aumentada por Recuperación (RAG) y LLMs para el análisis automatizado de líneas de tiempo. Aunque optimiza el análisis, su reproducibilidad es baja debido a la aleatoriedad intrínseca de los modelos generativos \cite{LoumachiFatmaYasmine2025ACIT}.
+    \item \textbf{PSI - Prompt Scene Investigation (Ledjaki et al., 2026):} Metodología pionera para auditar sistemas LLM comprometidos (\textit{AI Forensics}). Funciona como una guía institucional para aislar los rastros (\textit{prompts} y respuestas) bajo estricta cadena de custodia \cite{10.1145/3774905.3795469}.
+\end{itemize}
+
+\subsection{Matriz Comparativa de Frameworks}
+Para dar cumplimiento a los criterios de evaluación pericial y técnica, la Tabla \ref{tab:frameworks} presenta la matriz comparativa de cuatro de los \textit{frameworks} más representativos identificados en el estado del arte, abarcando las catorce variables metodológicas críticas.
+
+\begin{table*}[!t]
+\renewcommand{\arraystretch}{1.3}
+\caption{Matriz Comparativa de Frameworks de IA en Forensia Digital}
+\label{tab:frameworks}
+\centering
+\scriptsize
+\begin{tabular}{|p{2.5cm}|p{3.5cm}|p{3.5cm}|p{3.5cm}|p{3cm}|}
+\hline
+\textbf{Framework / Tipo} & \textbf{Dominio, Objetivo y Fases} & \textbf{Tipo de IA, Explicabilidad e Intervención Humana} & \textbf{Trazabilidad, Integridad y Manejo de Errores} & \textbf{Uso Judicial, Disponibilidad y Limitaciones} \\
+\hline
+\textbf{XAI-DF} \cite{KhalidZainab2024TauX} \newline \textit{Académico/Referencia} & \textbf{Dom:} Memoria RAM y Red. \newline \textbf{Obj:} Unificar explicabilidad. \newline \textbf{Fases:} Análisis y Presentación. & \textbf{IA:} ML Clásico, XAI (LIME/SHAP). \newline \textbf{XAI:} Alta (Modelos agnósticos). \newline \textbf{Humano:} Obligatorio (Auditor pericial). & \textbf{Trazabilidad:} Alta (registra pesos de \textit{features}). \newline \textbf{Integridad:} Actúa sobre copias. \newline \textbf{Errores:} Mitigados por validación visual cruzada. & \textbf{Judicial:} Admisibilidad alta por audibilidad. \newline \textbf{Disp:} Repositorio público. \newline \textbf{Límite:} Alto costo computacional para calcular \textit{Shapley values}. \\
+\hline
+\textbf{DeFaX} \cite{Al-ImranMd2025DACF} \newline \textit{Prototipo Experimental} & \textbf{Dom:} Imágenes sintéticas. \newline \textbf{Obj:} Detectar alteraciones de píxeles. \newline \textbf{Fases:} Análisis. & \textbf{IA:} Deep Learning (ViT, CNN). \newline \textbf{XAI:} Media (Grad-CAM, mapas de calor). \newline \textbf{Humano:} Triaje y verificación de anomalías. & \textbf{Trazabilidad:} Media (depende del mapa de activación). \newline \textbf{Integridad:} Conserva los metadatos originales. \newline \textbf{Errores:} Tasa de Falsos Negativos en ataques 0-day. & \textbf{Judicial:} Media (riesgo de impugnación por caja negra). \newline \textbf{Disp:} Interfaz web (Flask). \newline \textbf{Límite:} Sobreajuste a generadores GAN de entrenamiento. \\
+\hline
+\textbf{GenDFIR} \cite{LoumachiFatmaYasmine2025ACIT} \newline \textit{Propuesta Académica} & \textbf{Dom:} \textit{Timelining} e incidentes. \newline \textbf{Obj:} Correlacionar \textit{logs} distribuidos. \newline \textbf{Fases:} Recolección y Análisis. & \textbf{IA:} GenAI (LLMs locales, RAG). \newline \textbf{XAI:} Baja (justificación semántica, no causal). \newline \textbf{Humano:} Revisor final de grafos generados. & \textbf{Trazabilidad:} Incierta (depende de \textit{Vector DB}). \newline \textbf{Integridad:} Riesgo de alucinación semántica. \newline \textbf{Errores:} Susceptible a contaminación de contexto. & \textbf{Judicial:} Baja (resultados estocásticos violan reproducibilidad). \newline \textbf{Disp:} No especificada. \newline \textbf{Límite:} Inestabilidad en la inferencia temporal. \\
+\hline
+\textbf{PSI} \cite{10.1145/3774905.3795469} \newline \textit{Guía/Metodología} & \textbf{Dom:} AI Forensics (LLMs). \newline \textbf{Obj:} Recuperar evidencia de \textit{prompts}. \newline \textbf{Fases:} Identificación y Adquisición. & \textbf{IA:} Procesamiento de Lenguaje Natural. \newline \textbf{XAI:} N/A (enfoque forense directo). \newline \textbf{Humano:} Analista lidera la extracción física/lógica. & \textbf{Trazabilidad:} Alta (Hashing de \textit{logs}). \newline \textbf{Integridad:} Aplica bloqueo de escritura a la API/Logs. \newline \textbf{Errores:} Controlados mediante validación manual estricta. & \textbf{Judicial:} Alta (respeta cadena de custodia tradicional). \newline \textbf{Disp:} Metodología documentada. \newline \textbf{Límite:} Limitado a LLMs \textit{open-source} o con acceso a logs. \\
+\hline
+\end{tabular}
+\end{table*}
+
+\subsection{Conclusión sobre el estado actual de los frameworks}
+Al evaluar el panorama global con rigor metodológico, se concluye contundentemente que \textbf{no existe actualmente un framework integral, estandarizado y ampliamente adoptado a nivel industrial} para la forensia digital asistida por IA. Las soluciones disponibles continúan siendo parciales (limitadas a dominios muy específicos como \textit{deepfakes} o volcados de red), experimentales y académicas. Aunque esfuerzos como XAI-DF marcan un camino prometedor hacia la audibilidad, la industria judicial y pericial aún depende de la aplicación paralela de normativas forenses tradicionales (como la ISO 27037) y marcos de gestión de riesgos algorítmicos (NIST AI RMF) para suplir temporalmente este vacío arquitectónico.
+
 \nocite{*}
 \printbibliography
 
