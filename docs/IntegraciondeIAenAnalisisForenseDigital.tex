@@ -14,6 +14,8 @@
 \usepackage{url}
 \hyphenation{op-tical net-works semi-conduc-tor}
 \usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc}
 \usepackage{float}
 \usepackage{hyperref}
 
@@ -215,6 +217,64 @@ Para dar cumplimiento a los criterios de evaluación pericial y técnica, la Tab
 
 \subsection{Conclusión sobre el estado actual de los frameworks}
 Al evaluar el panorama global con rigor metodológico, se concluye contundentemente que \textbf{no existe actualmente un framework integral, estandarizado y ampliamente adoptado a nivel industrial} para la forensia digital asistida por IA. Las soluciones disponibles continúan siendo parciales (limitadas a dominios muy específicos como \textit{deepfakes} o volcados de red), experimentales y académicas. Aunque esfuerzos como XAI-DF marcan un camino prometedor hacia la audibilidad, la industria judicial y pericial aún depende de la aplicación paralela de normativas forenses tradicionales (como la ISO 27037) y marcos de gestión de riesgos algorítmicos (NIST AI RMF) para suplir temporalmente este vacío arquitectónico.
+
+%===========================================================
+% DIAGRAMA ARQUITECTÓNICO (TikZ)
+%===========================================================
+\begin{figure*}[!t]
+\centering
+\begin{tikzpicture}[
+    node distance=1.5cm and 2cm,
+    box/.style={rectangle, draw=black, thick, fill=blue!5, text width=3cm, align=center, minimum height=1.5cm, font=\footnotesize\sffamily},
+    ai_box/.style={rectangle, draw=red!80!black, thick, fill=red!5, text width=3.2cm, align=center, minimum height=1.5cm, font=\footnotesize\sffamily\bfseries},
+    human_box/.style={ellipse, draw=green!60!black, thick, fill=green!5, text width=2.8cm, align=center, minimum height=1.2cm, font=\footnotesize\sffamily},
+    arrow/.style={-{Stealth[scale=1.2]}, thick}
+]
+
+% Nodos
+\node (evidencia) [box] {1. Adquisición\\(Evidencia Original)};
+\node (copia) [box, right=of evidencia] {2. Imagen Forense\\(Clon Bit-a-Bit / Hashing)};
+\node (ia_model) [ai_box, right=of copia] {3. Inferencia de IA\\(Extracción de Características)};
+\node (xai) [ai_box, below=of ia_model] {4. Capa XAI\\(SHAP, Grad-CAM, LIME)};
+\node (analista) [human_box, left=of xai] {5. Human-in-the-Loop\\(Revisión y Correlación)};
+\node (reporte) [box, left=of analista] {6. Dictamen Pericial\\(Con Razón de Verosimilitud)};
+
+% Conexiones
+\draw [arrow] (evidencia) -- (copia);
+\draw [arrow] (copia) -- (ia_model);
+\draw [arrow] (ia_model) -- (xai);
+\draw [arrow] (xai) -- (analista);
+\draw [arrow] (analista) -- (reporte);
+
+% Flecha de retroalimentación
+\draw [arrow, dashed, bend left=20] (analista.north) to node[left, font=\scriptsize\sffamily] {Rechazo/Ajuste} (ia_model.south west);
+
+\end{tikzpicture}
+\caption{Flujo propuesto de un Pipeline Forense Asistido por IA con validación humana cruzada (Human-in-the-Loop) y capa de explicabilidad (XAI) para preservar la admisibilidad legal.}
+\label{fig:pipeline_ia}
+\end{figure*}
+
+%===========================================================
+% SECCIÓN 14: IMPLICACIONES LEGALES Y ÉTICAS
+%===========================================================
+\section{Implicaciones legales, éticas y probatorias}
+La automatización pericial introduce un cambio de paradigma en el derecho probatorio. Éticamente, el uso de sistemas opacos traslada la carga de la toma de decisiones algorítmicas a un terreno sin auditoría, lo que puede resultar en la incriminación injusta por falsos positivos (sesgo sistémico). Probatoriamente, un dictamen forense basado en un LLM o una red profunda que no pueda explicar el origen de su deducción violaría el principio de contradicción de la prueba. El perito asume responsabilidad civil y penal; por lo tanto, no puede delegar la autoría intelectual del hallazgo a una máquina. Como argumenta Sharma et al. \cite{SharmaDevanshu2026LaEI}, el uso de la IA es lícito \textit{únicamente} cuando actúa como herramienta de perfilación (triaje) o cuando sus resultados estadísticos son verificables empíricamente por un humano independiente.
+
+%===========================================================
+% SECCIÓN 15: LIMITACIONES Y LÍNEAS FUTURAS
+%===========================================================
+\section{Limitaciones y líneas futuras de investigación}
+\subsection{Limitaciones}
+Las principales limitaciones identificadas radican en: 1) la escasez de \textit{datasets} forenses etiquetados de acceso público debido a leyes de privacidad, lo que dificulta el entrenamiento de modelos imparciales; 2) la obsolescencia algorítmica, donde generadores de \textit{deepfakes} de nueva generación eluden fácilmente los clasificadores entrenados en versiones previas; y 3) la ausencia de estandarización en la cuantificación de la incertidumbre, donde las métricas tradicionales ($F_1$-Score) no logran capturar el nivel de confianza necesario para superar un contrainterrogatorio judicial severo.
+
+\subsection{Propuesta de Mejora y Trabajo Futuro}
+Se propone el desarrollo de un marco unificado de gobernanza forense (auditoría de \textit{logs} y \textit{prompts}) diseñado específicamente para grandes modelos de lenguaje ejecutados en entornos locales (Local LLMs). El trabajo futuro debe centrarse en adaptar la métrica de costo de razón de verosimilitud ($C_{llr}$) \cite{WarrenEricM.2025Ceal} como el estándar de oro para reportar la tasa de error de algoritmos de inteligencia artificial en las cortes internacionales.
+
+%===========================================================
+% SECCIÓN 16: CONCLUSIONES
+%===========================================================
+\section{Conclusiones}
+La integración de la inteligencia artificial en el análisis forense digital no sustituye el rigor procedimental de la disciplina, sino que lo complementa. Si bien las arquitecturas neuronales optimizan el procesamiento de volúmenes masivos de datos y detectan falsificaciones inalcanzables para el ojo humano, su implementación carece de viabilidad jurídica sin una capa robusta de IA Explicable (XAI). Se concluye que ninguna herramienta de IA de ``caja negra'' es idónea para sustentar un hallazgo concluyente en un estrado judicial. La admisibilidad legal dependerá invariablemente de la aplicación del principio \textit{Human-in-the-Loop}, donde la inteligencia artificial opera sobre copias inmaculadas de la evidencia, limitándose a proveer inferencias estadísticas que el perito humano debe corroborar, reproducir y defender técnica y causalmente frente a una autoridad judicial.
 
 \nocite{*}
 \printbibliography
