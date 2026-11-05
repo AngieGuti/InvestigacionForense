@@ -26,3 +26,6 @@ Frameworks/
 
 # PDFs compilados
 *.pdf
+
+# Instrucciones locales de Claude
+CLAUDE.md
